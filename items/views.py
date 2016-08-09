@@ -6,7 +6,9 @@ from django.contrib.auth.models import User
 class ItemList(generics.ListCreateAPIView):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
-
+    
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
 
 class ItemDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Item.objects.all()
